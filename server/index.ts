@@ -27,6 +27,10 @@ app.get("/api/buffer/:userId", async (req, res) => {
   const bufferCount = await exportedRedisClient.countClicksInTimeRange(userId);
   res.json({ bufferCount });
 });
+//every 15 seconds, truncate the queue to the last 11 seconds
+const interval = setInterval(() => {
+  exportedRedisClient.truncateQueue(11000);
+}, 15000);
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
