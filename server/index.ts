@@ -14,6 +14,7 @@ app.post("/api/click/:userId", async (req, res) => {
   const userId = req.params.userId;
   exportedRedisClient.addClick(now, userId);
   const bufferCount = await exportedRedisClient.countClicksInTimeRange(userId);
+  console.log(`Fetched buffer count for user ${userId}: ${bufferCount}`);
   res.status(200).json({ bufferCount });
 });
 app.get("/api/count/", async (req, res) => {
