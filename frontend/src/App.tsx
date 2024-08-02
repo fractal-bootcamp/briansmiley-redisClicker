@@ -14,6 +14,13 @@ const getCount = async (): Promise<number> => {
   return count;
 };
 
+/**Get the user's buffer count */
+const getBufferCount = async (userId: string): Promise<number> => {
+  const res = await fetch(`http://localhost:3000/api/buffer/${userId}`);
+  const { bufferCount } = await res.json();
+  return bufferCount;
+};
+
 const generateUniqueId = () => {
   return Math.random().toString(36);
 };
@@ -42,8 +49,10 @@ function App() {
     const periodicFetch = async () => {
       const newCount = await getCount();
       setCount(newCount);
+      const newBufferCount = await getBufferCount(userId);
+      setBufferCount(newBufferCount);
     };
-    const interval = setInterval(periodicFetch, 1000);
+    const interval = setInterval(periodicFetch, 100);
     return () => clearInterval(interval);
   }, []);
   return (
