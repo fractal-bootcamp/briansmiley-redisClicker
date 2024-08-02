@@ -21,8 +21,9 @@ export const exportedRedisClient = {
     );
     return clicks.filter(click => click === userId).length;
   },
-  getCount: () => {
-    return rawRedisClient.get("count");
+  getCount: async () => {
+    const count = await rawRedisClient.get("count");
+    return parseInt(count ?? "0");
   },
   truncateQueue: (range: number = 10000) => {
     //remove all clicks older than the given range
