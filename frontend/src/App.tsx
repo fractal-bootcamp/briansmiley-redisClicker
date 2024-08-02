@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+const API_URL = import.meta.env.API_URL;
 /**Send a click to the server and get back the user's clicks within the last 10 seconds */
 const postClick = async (userId: string) => {
-  const res = await fetch(`http://localhost:3000/api/click/${userId}`, {
+  const res = await fetch(`${API_URL}/api/click/${userId}`, {
     method: "POST"
   });
   const { bufferCount } = await res.json();
@@ -9,14 +10,14 @@ const postClick = async (userId: string) => {
 };
 /**Get the global click count */
 const getCount = async (): Promise<number> => {
-  const res = await fetch(`http://localhost:3000/api/count/`);
+  const res = await fetch(`${API_URL}/api/count/`);
   const { count } = await res.json();
   return count;
 };
 
 /**Get the user's buffer count */
 const getBufferCount = async (userId: string): Promise<number> => {
-  const res = await fetch(`http://localhost:3000/api/buffer/${userId}`);
+  const res = await fetch(`${API_URL}/api/buffer/${userId}`);
   const { bufferCount } = await res.json();
   return bufferCount;
 };
