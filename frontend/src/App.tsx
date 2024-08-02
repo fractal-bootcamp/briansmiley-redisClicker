@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 /**Send a click to the server and get back the user's clicks within the last 10 seconds */
 const postClick = async (userId: string) => {
   const res = await fetch(`http://localhost:3000/api/click/${userId}`, {
@@ -13,6 +12,13 @@ const getCount = async (): Promise<number> => {
   const res = await fetch(`http://localhost:3000/api/count/`);
   const { count } = await res.json();
   return count;
+};
+
+/**Get the user's buffer count */
+const getBufferCount = async (userId: string): Promise<number> => {
+  const res = await fetch(`http://localhost:3000/api/buffer/${userId}`);
+  const { bufferCount } = await res.json();
+  return bufferCount;
 };
 
 const generateUniqueId = () => {
@@ -43,16 +49,29 @@ function App() {
     const periodicFetch = async () => {
       const newCount = await getCount();
       setCount(newCount);
+      const newBufferCount = await getBufferCount(userId);
+      setBufferCount(newBufferCount);
     };
-    const interval = setInterval(periodicFetch, 1000);
+    const interval = setInterval(periodicFetch, 100);
     return () => clearInterval(interval);
   }, []);
   return (
-    <div className="flex flex-col items-center justify-center h-screen w-screen">
-      <div>{count}</div>
-      <button onClick={onClick}>Click</button>
-      <div>Cliks in last 10 seconds:</div>
-      <div> {bufferCount}</div>
+    <div className="flex flex-col items-center justify-end h-screen w-screen gap-2 bg-gradient-to-b from-slate-500 to-purple-500 p-4">
+      <div className="flex flex-col items-center justify-center gap-3 bg-slate-300 bg-opacity-50 p-5 rounded-lg">
+        <div>🌍 {count}</div>
+        <button onClick={onClick}>Click</button>
+        <div className="flex gap-1">
+          <div>
+            Your Buffer:{" "}
+            <span
+              className={`font-bold ${bufferCount > 9 ? "text-red-500" : ""}`}
+            >
+              {bufferCount}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div style={{ height: `${0 + (bufferCount / 10) * 80}vh` }}></div>
     </div>
   );
 }
