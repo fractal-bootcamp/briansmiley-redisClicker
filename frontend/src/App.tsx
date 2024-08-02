@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 /**Send a click to the server and get back the user's clicks within the last 10 seconds */
 const postClick = async (userId: string) => {
   const res = await fetch(`http://localhost:3000/api/click/${userId}`, {
@@ -48,11 +47,12 @@ function App() {
     return () => clearInterval(interval);
   }, []);
   return (
-    <div className="flex flex-col items-center justify-center h-screen w-screen">
-      <div>{count}</div>
+    <div className="flex flex-col items-center justify-center h-screen w-screen gap-2 bg-gradient-to-b from-slate-500 to-purple-500">
+      <div>🌍 {count}</div>
       <button onClick={onClick}>Click</button>
-      <div>Cliks in last 10 seconds:</div>
-      <div> {bufferCount}</div>
+      <div className="flex gap-1">
+        <div>Your Buffer: {bufferCount}</div>
+      </div>
     </div>
   );
 }
