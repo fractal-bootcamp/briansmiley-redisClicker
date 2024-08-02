@@ -1,8 +1,12 @@
 import Redis from "ioredis";
+import dotenv from "dotenv";
+import path from "path";
+
+dotenv.config({ path: path.resolve(__dirname, ".env") });
 const PORT = parseInt(process.env.REDIS_PORT ?? "6379");
 const HOST = process.env.REDIS_HOST ?? "localhost";
 const rawRedisClient = new Redis(PORT, HOST);
-
+console.log(PORT, HOST);
 export const exportedRedisClient = {
   addClick: (time: Date, userId: string) => {
     const value = userId + ":" + time.getTime().toString();
