@@ -1,20 +1,15 @@
 import express from "express";
-import { redisClient } from "./redis";
+import { exportedRedisClient } from "./redis";
 const app = express();
 
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.post("/api/zadd", (req, res) => {
-  const { key, value } = req.body;
-  redisClient.zadd(key, value, (err, reply) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.send(reply);
-    }
-  });
+app.post("/api/click", (req, res) => {
+  const body = req.body;
+  const { user, timeStamp } = body;
+  exportedRedisClient.addClick(timeStamp, user);
 });
 
 app.listen(3000, () => {
