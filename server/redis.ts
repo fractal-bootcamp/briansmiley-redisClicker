@@ -1,4 +1,3 @@
-import { raw } from "express";
 import Redis from "ioredis";
 const rawRedisClient = new Redis();
 
