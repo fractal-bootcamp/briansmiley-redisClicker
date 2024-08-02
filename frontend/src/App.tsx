@@ -56,12 +56,22 @@ function App() {
     return () => clearInterval(interval);
   }, []);
   return (
-    <div className="flex flex-col items-center justify-center h-screen w-screen gap-2 bg-gradient-to-b from-slate-500 to-purple-500">
-      <div>🌍 {count}</div>
-      <button onClick={onClick}>Click</button>
-      <div className="flex gap-1">
-        <div>Your Buffer: {bufferCount}</div>
+    <div className="flex flex-col items-center justify-end h-screen w-screen gap-2 bg-gradient-to-b from-slate-500 to-purple-500 p-4">
+      <div className="flex flex-col items-center justify-center gap-3 bg-slate-300 bg-opacity-50 p-5 rounded-lg">
+        <div>🌍 {count}</div>
+        <button onClick={onClick}>Click</button>
+        <div className="flex gap-1">
+          <div>
+            Your Buffer:{" "}
+            <span
+              className={`font-bold ${bufferCount > 9 ? "text-red-500" : ""}`}
+            >
+              {bufferCount}
+            </span>
+          </div>
+        </div>
       </div>
+      <div style={{ height: `${20 + (bufferCount / 10) * 60}vh` }}></div>
     </div>
   );
 }

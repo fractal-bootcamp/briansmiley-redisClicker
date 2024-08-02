@@ -20,9 +20,6 @@ export const exportedRedisClient = {
       startTime,
       endTime
     );
-    console.log(
-      `startTime: ${startTime}, endTime: ${endTime},userId: ${userId}, clicks: ${clicks}`
-    );
     return clicks.filter(click => click.startsWith(userId)).length;
   },
   getCount: async () => {
