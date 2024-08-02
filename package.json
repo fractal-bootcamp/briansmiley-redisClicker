@@ -6,6 +6,6 @@
     "ioredis": "^5.4.1"
   },
   "scripts": {
-    "server": "tsx --watch index.ts"
+    "server": "tsx --watch server/index.ts"
   }
 }
