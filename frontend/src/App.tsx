@@ -71,7 +71,7 @@ function App() {
           </div>
         </div>
       </div>
-      <div style={{ height: `${20 + (bufferCount / 10) * 60}vh` }}></div>
+      <div style={{ height: `${0 + (bufferCount / 10) * 80}vh` }}></div>
     </div>
   );
 }
