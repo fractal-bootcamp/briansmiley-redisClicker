@@ -1,13 +1,7 @@
 import Redis from "ioredis";
-const rawRedisClient = new Redis({
-  host: process.env.REDIS_HOST ?? "localhost",
-  port: parseInt(process.env.REDIS_PORT ?? "6379"), // Default Redis port, change if different
-  //   password: 'your-redis-password',
-  // Optional: if using TLS/SSL
-  tls: {
-    // TLS options
-  }
-});
+const PORT = parseInt(process.env.REDIS_PORT ?? "6379");
+const HOST = process.env.REDIS_HOST ?? "localhost";
+const rawRedisClient = new Redis(PORT, HOST);
 
 export const exportedRedisClient = {
   addClick: (time: Date, userId: string) => {

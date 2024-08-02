@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-const API_URL = import.meta.env.API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 /**Send a click to the server and get back the user's clicks within the last 10 seconds */
 const postClick = async (userId: string) => {
   const res = await fetch(`${API_URL}/api/click/${userId}`, {
