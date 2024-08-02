@@ -33,7 +33,7 @@ const interval = setInterval(async () => {
   const beforeLength = await exportedRedisClient.countClicksInTimeRange("", 0);
   console.log(`Queue length before truncation: ${beforeLength}`);
   const removed = await exportedRedisClient.truncateQueue(11000);
-  const afterLength = await exportedRedisClient.countClicksInTimeRange("");
+  const afterLength = await exportedRedisClient.countClicksInTimeRange("", 0);
   console.log(
     `Queue length after truncation: ${afterLength}; removed ${removed} items`
   );
