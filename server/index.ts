@@ -12,10 +12,13 @@ app.get("/", (req, res) => {
 app.post("/api/click/:userId", async (req, res) => {
   const now = new Date();
   const userId = req.params.userId;
-  const bufferCount = await exportedRedisClient.countClicksInTimeRange(userId);
-  if (bufferCount >= 10) return res.status(429).json({ bufferCount });
+  const preBufferCount = await exportedRedisClient.countClicksInTimeRange(
+    userId
+  );
+  if (preBufferCount >= 10)
+    return res.status(429).json({ bufferCount: preBufferCount });
   exportedRedisClient.addClick(now, userId);
-  return res.status(200).json({ bufferCount });
+  return res.status(200).json({ bufferCount: preBufferCount + 1 });
 });
 app.get("/api/count/", async (req, res) => {
   const count = await exportedRedisClient.getCount();
