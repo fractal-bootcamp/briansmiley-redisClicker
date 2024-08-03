@@ -40,19 +40,29 @@ function App() {
   const [count, setCount] = useState(0);
   const [bufferCount, setBufferCount] = useState(0); //current user's clicks within the last 10 seconds
   const onClick = async () => {
+    if (bufferCount > 9) {
+      return;
+    }
+    //optimistic update; will be overridden by periodic fetch if desyncs from redis
+    setCount(count + 1);
+    setBufferCount(bufferCount + 1);
+    //send the click to the server
     const newBufferCount = await postClick(userId);
+    //update the buffer count as soon as the server responds
     setBufferCount(newBufferCount);
   };
   useEffect(() => {
+    //get/set userId at mount
     const userId = getUserId();
     setUserId(userId);
+    //periodically fetch the count and buffer count from the server
     const periodicFetch = async () => {
       const newCount = await getCount();
       setCount(newCount);
       const newBufferCount = await getBufferCount(userId);
       setBufferCount(newBufferCount);
     };
-    const interval = setInterval(periodicFetch, 100);
+    const interval = setInterval(periodicFetch, 1000);
     return () => clearInterval(interval);
   }, []);
   return (
