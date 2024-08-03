@@ -44,9 +44,8 @@ function App() {
     setBufferCount(newBufferCount);
   };
   useEffect(() => {
-    setUserId(getUserId());
-  }, []);
-  useEffect(() => {
+    const userId = getUserId();
+    setUserId(userId);
     const periodicFetch = async () => {
       const newCount = await getCount();
       setCount(newCount);
